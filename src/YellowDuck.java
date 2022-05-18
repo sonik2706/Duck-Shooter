@@ -1,11 +1,12 @@
-public class YellowDuck extends Duck{
+public class YellowDuck extends Duck {
 
-    public YellowDuck(){
+    public YellowDuck(int x, int y){
+        super(x,y);
         this.health = 1;
     }
 
     @Override
     public String toString(){
-        return "Yellow duck, health=" + getHealth();
+        return "Yellow duck, health=" + getHealth() + "(" + x + ";" + y + ")";
     }
 }

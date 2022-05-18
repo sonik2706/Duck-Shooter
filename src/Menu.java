@@ -4,9 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 public class Menu extends JFrame {
 
-    public Menu(int width, int height){
+    public Menu(int width, int height) {
 
         setSize(width, height);
         setTitle("Duck Shooter");
@@ -18,25 +21,26 @@ public class Menu extends JFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 
         JLabel menuLabel = new JLabel("MENU");
-        menuLabel.setFont(new FontUIResource("Times New Roman", Font.BOLD ,30));
+        menuLabel.setFont(new FontUIResource("Times New Roman", Font.BOLD, 30));
 
+        // New game button
         JButton newGameButton = new JButton("NEW GAME");
-        newGameButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN ,25));
+        newGameButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
         newGameButton.setContentAreaFilled(false);
         newGameButton.setBorder(BorderFactory.createEmptyBorder());
-
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
-                SwingUtilities.invokeLater(()->{
-                    new NewGame(width, height);
+                SwingUtilities.invokeLater(() -> {
+                    new NewGame();
                 });
             }
         });
 
+        // Highscore button
         JButton highScoreButton = new JButton("HIGH SCORES");
-        highScoreButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN ,25));
+        highScoreButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
         highScoreButton.setContentAreaFilled(false);
         highScoreButton.setBorder(BorderFactory.createEmptyBorder());
 
@@ -44,24 +48,31 @@ public class Menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
-                SwingUtilities.invokeLater(()->{
-                    new HighScore(width,height);
+                SwingUtilities.invokeLater(() -> {
+                    new HighScore(width, height);
                 });
             }
         });
 
+        // Exit button
         JButton exitButton = new JButton("EXIT");
-        exitButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN ,25));
+        exitButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
         exitButton.setContentAreaFilled(false);
         exitButton.setBorder(BorderFactory.createEmptyBorder());
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+
+                System.out.println("Saving data...");
+
+
                 System.exit(0);
             }
         });
 
-        JPanel menu = new JPanel(){};
+
+        JPanel menu = new JPanel() {
+        };
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.add(menuLabel);
         menu.add(newGameButton);
