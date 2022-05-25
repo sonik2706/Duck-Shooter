@@ -26,14 +26,11 @@ public class HighScore extends JFrame {
 
         JButton backToMenu = new JButton("Back");
         backToMenu.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
-        backToMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                SwingUtilities.invokeLater(() -> {
-                    new Menu(width, height);
-                });
-            }
+        backToMenu.addActionListener(e -> {
+            dispose();
+            SwingUtilities.invokeLater(() -> {
+                new Menu(width, height);
+            });
         });
 
         add(backToMenu);

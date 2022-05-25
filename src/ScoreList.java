@@ -2,8 +2,9 @@ import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ScoreList extends AbstractListModel {
     ArrayList<Score> scores;
@@ -14,6 +15,7 @@ public class ScoreList extends AbstractListModel {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             scores = (ArrayList<Score>) ois.readObject();
+            scores.sort((c1, c2) -> (int) (c2.getHighscore() - c1.getHighscore()));
 
             ois.close();
             fis.close();

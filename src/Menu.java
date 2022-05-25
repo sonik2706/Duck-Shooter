@@ -1,8 +1,6 @@
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class Menu extends JFrame {
@@ -26,18 +24,15 @@ public class Menu extends JFrame {
         newGameButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
         newGameButton.setContentAreaFilled(false);
         newGameButton.setBorder(BorderFactory.createEmptyBorder());
-        newGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                dispose();
-                SwingUtilities.invokeLater(() -> {
-                    try {
-                        new NewGame();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
+        newGameButton.addActionListener(arg0 -> {
+            dispose();
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    new NewGame();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         });
 
         // Highscore button
@@ -45,14 +40,11 @@ public class Menu extends JFrame {
         highScoreButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
         highScoreButton.setContentAreaFilled(false);
         highScoreButton.setBorder(BorderFactory.createEmptyBorder());
-        highScoreButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                dispose();
-                SwingUtilities.invokeLater(() -> {
-                    new HighScore(width, height);
-                });
-            }
+        highScoreButton.addActionListener(arg0 -> {
+            dispose();
+            SwingUtilities.invokeLater(() -> {
+                new HighScore(width, height);
+            });
         });
 
         // Exit button
@@ -60,14 +52,9 @@ public class Menu extends JFrame {
         exitButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
         exitButton.setContentAreaFilled(false);
         exitButton.setBorder(BorderFactory.createEmptyBorder());
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-
-                System.out.println("Saving data...");
-
-                System.exit(0);
-            }
+        exitButton.addActionListener(arg0 -> {
+            System.out.println("Saving data...");
+            System.exit(0);
         });
 
         JPanel menu = new JPanel();

@@ -1,5 +1,4 @@
 public class Timer extends Thread {
-
     public int seconds = 0;
 
     public void run() {

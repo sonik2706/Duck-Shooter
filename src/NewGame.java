@@ -6,7 +6,6 @@ import java.io.IOException;
 public class NewGame extends JFrame implements KeyListener {
 
     Game game;
-
     public NewGame() throws IOException {
         setSize(500, 500);
         setTitle("Duck Shooter");

@@ -6,35 +6,47 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import Duck.*;
+
 public class Game extends JPanel implements Runnable {
 
-    Thread gameThread, duckThread, ShootingThread;
+    Thread gameThread, duckThread, cloudThread, ShootingThread;
     Timer time;
     int level = 1;
     int FPS = 60;
     int points = 0;
     int health = 100;
+    int speed = 1500;
     CopyOnWriteArrayList<Duck> duckList = new CopyOnWriteArrayList<>();
+    CopyOnWriteArrayList<Cloud> cloudList = new CopyOnWriteArrayList<>();
     private Image backgroundImage;
 
     public Game() throws IOException {
         startGameThread();
-
         setBackground(new java.awt.Color(204, 255, 255));
         this.setDoubleBuffered(true);
     }
 
     public void startGameThread() {
         time = new Timer();
-
         gameThread = new Thread(this);
-
         duckThread = new Thread(() -> {
             while (!duckThread.isInterrupted()) {
                 try {
-                    Thread.sleep(1500);
+                    Thread.sleep(speed);
                     Duck duck = new YellowDuck(-25, (int) (Math.random() * 350 + 50 + 1));
-                    addDuck(duck);
+                    duckList.add(duck);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        });
+
+        cloudThread = new Thread(()->{
+            while (!cloudThread.isInterrupted()) {
+                try {
+                    Thread.sleep(speed*2);
+                    Cloud cloud = new Cloud(-100, (int) (Math.random() * 350 + 50 + 1));
+                    cloudList.add(cloud);
                 } catch (InterruptedException ignored) {
                 }
             }
@@ -60,13 +72,13 @@ public class Game extends JPanel implements Runnable {
         time.start();
         gameThread.start();
         duckThread.start();
+        cloudThread.start();
         ShootingThread.start();
     }
 
-    public void endGame(){
+    public void endGame() {
         String nickname = JOptionPane.showInputDialog(null, "Nickname: ", null, JOptionPane.INFORMATION_MESSAGE);
         Score sc = new Score(nickname, points, time.getTime());
-
         ArrayList<Score> scores = new ArrayList<>();
 
         try {
@@ -77,21 +89,18 @@ public class Game extends JPanel implements Runnable {
 
             ois.close();
             fis.close();
-        }
-        catch (IOException | ClassNotFoundException ioe) {
+        } catch (IOException | ClassNotFoundException ioe) {
             ioe.printStackTrace();
         }
 
         scores.add(sc);
-
         try {
             FileOutputStream fos = new FileOutputStream("data/highscores.bin");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(scores);
             oos.close();
             fos.close();
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
 
@@ -103,25 +112,31 @@ public class Game extends JPanel implements Runnable {
 
         time.interrupt();
         gameThread.stop();
-
 //        gameThread.interrupt();
-    }
-
-    public void addDuck(Duck d) {
-        duckList.add(d);
     }
 
     public void update() {
         for (Duck duck : duckList) {
             duck.move(level);
 
-            if (duck.reachedEnd()){
-                health -= 10;
+            if (duck.reachedEnd()) {
+                if (duck instanceof YellowDuck)
+                    health -= 10;
+                else if (duck instanceof RedDuck)
+                    health -= 12;
+                else if (duck instanceof PurpleDuck)
+                    health -= 14;
+                else if (duck instanceof GreenDuck)
+                    health -= 16;
+
                 duckList.remove(duck);
             }
-
             if (health <= 0)
                 endGame();
+        }
+
+        for (Cloud cloud: cloudList){
+            cloud.setX(cloud.getX()+1);
         }
     }
 
@@ -138,12 +153,16 @@ public class Game extends JPanel implements Runnable {
             graphics2D.drawImage(duck.getImage(), duck.getX(), duck.getY(), null);
         }
 
+        for (Cloud cloud : cloudList) {
+            graphics2D.drawImage(cloud.getImage(), cloud.getX(), cloud.getY(), null);
+        }
+
         graphics2D.dispose();
     }
 
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;

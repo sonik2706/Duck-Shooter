@@ -1,4 +1,5 @@
-import javax.imageio.ImageIO;
+package Duck;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -15,12 +16,12 @@ public abstract class Duck {
     }
 
     // if duck is dead it will return true, if not then false.
-    public boolean decreaseHealth(){
-        this.health-=1;
+    public boolean decreaseHealth() {
+        this.health -= 1;
         return this.health == 0;
     }
 
-    public BufferedImage getImage(){
+    public BufferedImage getImage() {
         return image;
     }
 
@@ -33,7 +34,7 @@ public abstract class Duck {
         return this.x == 500;
     }
 
-    public void move (int speed) {
+    public void move(int speed) {
         this.x += speed;
     }
 
@@ -57,7 +58,9 @@ public abstract class Duck {
         this.y = y;
     }
 
-    public int getHealth(){
+    public int getHealth() {
         return this.health;
     }
+
+    Package Duck;
 }

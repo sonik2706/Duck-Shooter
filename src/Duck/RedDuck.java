@@ -1,15 +1,17 @@
+package Duck;
+
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-public class GreenDuck extends Duck {
+public class RedDuck extends Duck {
 
-    public GreenDuck(int x, int y){
+    public RedDuck(int x, int y){
         super(x,y);
-        this.health = 20;
+        this.health = 5;
 
         try {
-            image = ImageIO.read(new File("Graphics/greenDuck.png"));
+            image = ImageIO.read(new File("Graphics/redDuck.png"));
         }
         catch (
                 IOException e) {
@@ -19,6 +21,6 @@ public class GreenDuck extends Duck {
 
     @Override
     public String toString(){
-        return "Pink duck, health=" + getHealth() + "(" + x + ";" + y + ")";
+        return "Red duck, health=" + getHealth() + "(" + x + ";" + y + ")";
     }
 }
