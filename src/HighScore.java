@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class HighScore extends JFrame {
 
@@ -14,19 +16,36 @@ public class HighScore extends JFrame {
         setVisible(true);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+        getContentPane().setBackground(new java.awt.Color(204, 255, 255));
 
-        JLabel menuLabel = new JLabel("High Scores:");
-        menuLabel.setFont(new FontUIResource("Times New Roman", Font.BOLD ,30));
+        ScoreList scoreList = new ScoreList();
+        JList jList = new JList(scoreList);
 
-        JPanel menu = new JPanel(){};
-//        JList highscore = new JList(playerArrayList.toArray());
-        menu.setLayout(new ScrollPaneLayout());
-        menu.add(menuLabel);
+        JScrollPane jScrollPane = new JScrollPane(jList);
+        add(jScrollPane);
 
-        menu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton backToMenu = new JButton("Back");
+        backToMenu.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
+        backToMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                SwingUtilities.invokeLater(() -> {
+                    new Menu(width, height);
+                });
+            }
+        });
+
+        add(backToMenu);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(jScrollPane);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         add(Box.createHorizontalGlue());
-        getContentPane().add(menu);
+        getContentPane().add(panel);
         add(Box.createHorizontalGlue());
     }
 }

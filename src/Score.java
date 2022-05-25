@@ -1,9 +1,16 @@
-public class Score {
+import java.io.Serializable;
+
+public class Score implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String nickname;
     private int highscore = 0;
+    private String time;
 
-    public Score(String nickname) {
+    public Score(String nickname, int highscore, String time) {
         this.nickname = nickname;
+        this.highscore = highscore;
+        this.time = time;
     }
 
     public int getHighscore() {
@@ -12,5 +19,9 @@ public class Score {
 
     public void setHighscore(int highscore) {
         this.highscore = highscore;
+    }
+
+    public String string() {
+        return time + " " + nickname + " " + highscore;
     }
 }

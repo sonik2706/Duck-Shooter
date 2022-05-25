@@ -3,9 +3,7 @@ import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import java.io.IOException;
 
 public class Menu extends JFrame {
 
@@ -33,7 +31,11 @@ public class Menu extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 dispose();
                 SwingUtilities.invokeLater(() -> {
-                    new NewGame();
+                    try {
+                        new NewGame();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         });
@@ -43,7 +45,6 @@ public class Menu extends JFrame {
         highScoreButton.setFont(new FontUIResource("Times New Roman", Font.PLAIN, 25));
         highScoreButton.setContentAreaFilled(false);
         highScoreButton.setBorder(BorderFactory.createEmptyBorder());
-
         highScoreButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -65,14 +66,11 @@ public class Menu extends JFrame {
 
                 System.out.println("Saving data...");
 
-
                 System.exit(0);
             }
         });
 
-
-        JPanel menu = new JPanel() {
-        };
+        JPanel menu = new JPanel();
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.add(menuLabel);
         menu.add(newGameButton);

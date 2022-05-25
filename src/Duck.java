@@ -1,7 +1,13 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+
 public abstract class Duck {
 
     protected int health;
     protected int x, y;
+    protected BufferedImage image;
 
     public Duck(int x, int y) {
         this.x = x;
@@ -14,8 +20,21 @@ public abstract class Duck {
         return this.health == 0;
     }
 
+    public BufferedImage getImage(){
+        return image;
+    }
+
+    public boolean gotHit(MouseEvent mouseEvent) {
+        Point coordinates = mouseEvent.getPoint();
+        return this.x <= coordinates.x && coordinates.x <= this.x + 25 && this.y <= coordinates.y && coordinates.y <= this.y + 25;
+    }
+
+    public boolean reachedEnd() {
+        return this.x == 500;
+    }
+
     public void move (int speed) {
-        this.x += speed*1;
+        this.x += speed;
     }
 
     public void setHealth(int health) {

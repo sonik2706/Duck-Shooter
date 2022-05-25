@@ -1,8 +1,19 @@
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 public class YellowDuck extends Duck {
 
     public YellowDuck(int x, int y){
         super(x,y);
         this.health = 1;
+
+        try {
+            image = ImageIO.read(new File("Graphics/yellowDuck.png"));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
