@@ -1,7 +1,7 @@
+package Program;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -10,6 +10,7 @@ import Duck.*;
 
 public class Game extends JPanel implements Runnable {
 
+    private static Game instance;
     Thread gameThread, duckThread, cloudThread, ShootingThread;
     Timer time;
     int level = 1;
@@ -17,14 +18,17 @@ public class Game extends JPanel implements Runnable {
     int points = 0;
     int health = 100;
     int speed = 1500;
+
     CopyOnWriteArrayList<Duck> duckList = new CopyOnWriteArrayList<>();
     CopyOnWriteArrayList<Cloud> cloudList = new CopyOnWriteArrayList<>();
-    private Image backgroundImage;
 
     public Game() throws IOException {
+        instance = this;
         startGameThread();
         setBackground(new java.awt.Color(204, 255, 255));
         this.setDoubleBuffered(true);
+
+        setLayout(null);
     }
 
     public void startGameThread() {
@@ -49,7 +53,7 @@ public class Game extends JPanel implements Runnable {
                             duck = new GreenDuck(-25, (int) (Math.random() * 350 + 50 + 1));
                             break;
                     }
-
+                    add(duck);
                     duckList.add(duck);
                 } catch (InterruptedException ignored) {
                 }
@@ -67,28 +71,28 @@ public class Game extends JPanel implements Runnable {
             }
         });
 
-        ShootingThread = new Thread(() -> {
-            this.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    for (Duck d : duckList) {
-                        if (d.gotHit(e)) {
-                            d.setHealth(d.getHealth() - 1);
-                        }
-                        if (d.getHealth() <= 0) {
-                            duckList.remove(d);
-                            points += (10) * level;
-                        }
-                    }
-                }
-            });
-        });
+//        ShootingThread = new Thread(() -> {
+//            this.addMouseListener(new MouseAdapter() {
+//                @Override
+//                public void mouseClicked(MouseEvent e) {
+//                    for (Duck d : duckList) {
+//                        if (d.gotHit(e)) {
+//                            d.setHealth(d.getHealth() - 1);
+//                        }
+//                        if (d.getHealth() <= 0) {
+//                            duckList.remove(d);
+//                            points += (10) * level;
+//                        }
+//                    }
+//                }
+//            });
+//        });
 
         time.start();
         gameThread.start();
         duckThread.start();
         cloudThread.start();
-        ShootingThread.start();
+//        ShootingThread.start();
     }
 
     public void endGame() {
@@ -162,20 +166,22 @@ public class Game extends JPanel implements Runnable {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D graphics2D = (Graphics2D) g;
-        graphics2D.setColor(Color.BLACK);
-        graphics2D.drawString(time.getTime(), 25, 25);
-        graphics2D.drawString("Points: " + points, 100, 25);
-        graphics2D.drawString("Health: " + health + "%", 25, 50);
+//        Graphics2D graphics2D = (Graphics2D) g;
+//        graphics2D.setColor(Color.BLACK);
+//        graphics2D.drawString(time.getTime(), 25, 25);
+//
+//        graphics2D.drawString("Points: " + points, 100, 25);
+//        graphics2D.drawString("Health: " + health + "%", 25, 50);
+
         for (Duck duck : duckList) {
-            graphics2D.drawImage(duck.getImage(), duck.getX(), duck.getY(), null);
+            duck.setBounds(duck.getX(), duck.getY(), 30,30);
         }
 
-        for (Cloud cloud : cloudList) {
-            graphics2D.drawImage(cloud.getImage(), cloud.getX(), cloud.getY(), null);
-        }
-
-        graphics2D.dispose();
+//        for (Cloud cloud : cloudList) {
+//            graphics2D.drawImage(cloud.getImage(), cloud.getX(), cloud.getY(), null);
+//        }
+//
+//        graphics2D.dispose();
     }
 
     @Override
@@ -196,5 +202,13 @@ public class Game extends JPanel implements Runnable {
                 delta--;
             }
         }
+    }
+
+    public static Game getInstance(){
+        return instance;
+    }
+
+    public CopyOnWriteArrayList<Duck> getDuckList() {
+        return duckList;
     }
 }

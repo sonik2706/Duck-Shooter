@@ -1,6 +1,8 @@
 package Duck;
 
 import javax.imageio.ImageIO;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,4 +24,5 @@ public class YellowDuck extends Duck {
     public String toString(){
         return "Yellow duck, health=" + getHealth() + "(" + x + ";" + y + ")";
     }
+
 }

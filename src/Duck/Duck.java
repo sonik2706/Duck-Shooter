@@ -2,15 +2,24 @@ package Duck;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
-public abstract class Duck {
+import Program.Game;
+
+import javax.swing.*;
+
+public abstract class Duck extends JLabel implements MouseListener {
 
     protected int health;
     protected int x, y;
     protected BufferedImage image;
 
+    Game game = Game.getInstance();
+
     public Duck(int x, int y) {
+        setIcon(new ImageIcon("Graphics/yellowDuck.png"));
+        addMouseListener(this);
         this.x = x;
         this.y = y;
     }
@@ -61,4 +70,38 @@ public abstract class Duck {
     public int getHealth() {
         return this.health;
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        health -= 1;
+
+        if (health == 0) {
+            game.remove(this);
+            game.getDuckList().remove(this);
+
+            game.revalidate();
+            game.repaint();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
 }
