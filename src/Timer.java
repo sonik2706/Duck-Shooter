@@ -1,5 +1,5 @@
 public class Timer extends Thread {
-    public int seconds = 0;
+    private int seconds = 0;
 
     public void run() {
         while (!isInterrupted()) {

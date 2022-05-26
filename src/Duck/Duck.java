@@ -27,7 +27,7 @@ public abstract class Duck {
 
     public boolean gotHit(MouseEvent mouseEvent) {
         Point coordinates = mouseEvent.getPoint();
-        return this.x <= coordinates.x && coordinates.x <= this.x + 25 && this.y <= coordinates.y && coordinates.y <= this.y + 25;
+        return this.x <= coordinates.x && coordinates.x <= this.x + 30 && this.y <= coordinates.y && coordinates.y <= this.y + 30;
     }
 
     public boolean reachedEnd() {
@@ -61,6 +61,4 @@ public abstract class Duck {
     public int getHealth() {
         return this.health;
     }
-
-    Package Duck;
 }

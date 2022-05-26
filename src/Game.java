@@ -34,7 +34,22 @@ public class Game extends JPanel implements Runnable {
             while (!duckThread.isInterrupted()) {
                 try {
                     Thread.sleep(speed);
-                    Duck duck = new YellowDuck(-25, (int) (Math.random() * 350 + 50 + 1));
+                    Duck duck;
+                    switch (level) {
+                        default:
+                            duck = new YellowDuck(-25, (int) (Math.random() * 350 + 50 + 1));
+                            break;
+                        case 2:
+                            duck = new RedDuck(-25, (int) (Math.random() * 350 + 50 + 1));
+                            break;
+                        case 3:
+                            duck = new PurpleDuck(-25, (int) (Math.random() * 350 + 50 + 1));
+                            break;
+                        case 4:
+                            duck = new GreenDuck(-25, (int) (Math.random() * 350 + 50 + 1));
+                            break;
+                    }
+
                     duckList.add(duck);
                 } catch (InterruptedException ignored) {
                 }
@@ -44,7 +59,7 @@ public class Game extends JPanel implements Runnable {
         cloudThread = new Thread(()->{
             while (!cloudThread.isInterrupted()) {
                 try {
-                    Thread.sleep(speed*2);
+                    Thread.sleep(speed*3);
                     Cloud cloud = new Cloud(-100, (int) (Math.random() * 350 + 50 + 1));
                     cloudList.add(cloud);
                 } catch (InterruptedException ignored) {
@@ -117,7 +132,7 @@ public class Game extends JPanel implements Runnable {
 
     public void update() {
         for (Duck duck : duckList) {
-            duck.move(level);
+            duck.move(1);
 
             if (duck.reachedEnd()) {
                 if (duck instanceof YellowDuck)
@@ -131,6 +146,9 @@ public class Game extends JPanel implements Runnable {
 
                 duckList.remove(duck);
             }
+
+            level = 1+Integer.parseInt(time.getSeconds())/30;
+
             if (health <= 0)
                 endGame();
         }
