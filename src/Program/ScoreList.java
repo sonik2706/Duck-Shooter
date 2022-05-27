@@ -1,3 +1,5 @@
+package Program;
+
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.IOException;

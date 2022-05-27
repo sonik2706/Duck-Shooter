@@ -1,3 +1,5 @@
+package Program;
+
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
@@ -26,13 +28,7 @@ public class Menu extends JFrame {
         newGameButton.setBorder(BorderFactory.createEmptyBorder());
         newGameButton.addActionListener(arg0 -> {
             dispose();
-            SwingUtilities.invokeLater(() -> {
-                try {
-                    new NewGame();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            SwingUtilities.invokeLater(Level::new);
         });
 
         // Highscore button

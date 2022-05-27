@@ -1,3 +1,5 @@
+package Program;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -6,7 +8,7 @@ import java.io.IOException;
 public class NewGame extends JFrame implements KeyListener {
 
     Game game;
-    public NewGame() throws IOException {
+    public NewGame(int level) throws IOException {
         setSize(500, 500);
         setTitle("Duck Shooter");
         setResizable(false);
@@ -17,6 +19,7 @@ public class NewGame extends JFrame implements KeyListener {
         addKeyListener(this);
 
         game = new Game();
+        game.setLevel(level);
         add(game);
     }
 

@@ -1,8 +1,6 @@
 package Duck;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
 
 public class YellowDuck extends Duck {
 
@@ -10,16 +8,12 @@ public class YellowDuck extends Duck {
         super(x,y);
         this.health = 1;
 
-        try {
-            image = ImageIO.read(new File("Graphics/yellowDuck.png"));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        setIcon(new ImageIcon("Graphics/yellowDuck.png"));
     }
 
     @Override
     public String toString(){
         return "Yellow duck, health=" + getHealth() + "(" + x + ";" + y + ")";
     }
+
 }

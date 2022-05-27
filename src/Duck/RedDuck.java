@@ -1,22 +1,14 @@
 package Duck;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
 
 public class RedDuck extends Duck {
 
     public RedDuck(int x, int y){
         super(x,y);
-        this.health = 5;
+        this.health = 3;
 
-        try {
-            image = ImageIO.read(new File("Graphics/redDuck.png"));
-        }
-        catch (
-                IOException e) {
-            e.printStackTrace();
-        }
+        setIcon(new ImageIcon("Graphics/redDuck.png"));
     }
 
     @Override

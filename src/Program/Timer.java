@@ -1,3 +1,5 @@
+package Program;
+
 public class Timer extends Thread {
     private int seconds = 0;
 

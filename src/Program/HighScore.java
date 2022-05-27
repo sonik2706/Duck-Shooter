@@ -1,3 +1,5 @@
+package Program;
+
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
@@ -32,12 +34,10 @@ public class HighScore extends JFrame {
         });
 
         add(backToMenu);
-
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(jScrollPane);
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
         add(Box.createHorizontalGlue());
         getContentPane().add(panel);
