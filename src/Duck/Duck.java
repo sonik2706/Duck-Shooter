@@ -3,40 +3,21 @@ package Duck;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-
-import Program.Game;
-
+import java.util.ArrayList;
 import javax.swing.*;
+import Program.Game;
+import Program.Obstacle;
 
 public abstract class Duck extends JLabel implements MouseListener {
 
     protected int health;
     protected int x, y;
-    protected BufferedImage image;
-
-    Game game = Game.getInstance();
+    private Game game = Game.getInstance();
 
     public Duck(int x, int y) {
-        setIcon(new ImageIcon("Graphics/yellowDuck.png"));
         addMouseListener(this);
         this.x = x;
         this.y = y;
-    }
-
-    // if duck is dead it will return true, if not then false.
-    public boolean decreaseHealth() {
-        this.health -= 1;
-        return this.health == 0;
-    }
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public boolean gotHit(MouseEvent mouseEvent) {
-        Point coordinates = mouseEvent.getPoint();
-        return this.x <= coordinates.x && coordinates.x <= this.x + 30 && this.y <= coordinates.y && coordinates.y <= this.y + 30;
     }
 
     public boolean reachedEnd() {
@@ -73,15 +54,31 @@ public abstract class Duck extends JLabel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        health -= 1;
 
-        if (health == 0) {
+//        ArrayList<Obstacle> obstacles = game.getCloudList();
+//        for (Obstacle obstacle : obstacles) {
+//            Point coordinates = e.getPoint();
+//            if (obstacle.getX() <= coordinates.x && coordinates.x <= obstacle.getX() + obstacle.getWidth() && obstacle.getY() <= coordinates.y && coordinates.y <= obstacle.getY() + obstacle.getHeight())
+//                return;
+//        }
+
+        health -= game.getWeapon().getDamage();
+
+        if (health <= 0) {
             game.remove(this);
             game.getDuckList().remove(this);
-
             game.revalidate();
             game.repaint();
         }
+
+        if (this instanceof YellowDuck)
+            game.setPoints(game.getPoints()+10);
+        else if (this instanceof RedDuck)
+            game.setPoints(game.getPoints()+20);
+        else if (this instanceof PurpleDuck)
+            game.setPoints(game.getPoints()+30);
+        else if (this instanceof GreenDuck)
+            game.setPoints(game.getPoints()+40);
     }
 
     @Override

@@ -1,22 +1,14 @@
 package Duck;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
 
 public class PurpleDuck extends Duck {
 
     public PurpleDuck(int x, int y){
         super(x, y);
-        this.health = 10;
+        this.health = 5;
 
-        try {
-            image = ImageIO.read(new File("Graphics/purpleDuck.png"));
-        }
-        catch (
-                IOException e) {
-            e.printStackTrace();
-        }
+        setIcon(new ImageIcon("Graphics/purpleDuck.png"));
     }
 
     @Override

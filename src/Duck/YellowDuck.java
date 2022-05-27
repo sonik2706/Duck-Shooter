@@ -1,10 +1,6 @@
 package Duck;
 
-import javax.imageio.ImageIO;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.*;
 
 public class YellowDuck extends Duck {
 
@@ -12,12 +8,7 @@ public class YellowDuck extends Duck {
         super(x,y);
         this.health = 1;
 
-        try {
-            image = ImageIO.read(new File("Graphics/yellowDuck.png"));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        setIcon(new ImageIcon("Graphics/yellowDuck.png"));
     }
 
     @Override
