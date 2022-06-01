@@ -1,4 +1,4 @@
-package Program;
+package View;
 
 import java.io.Serial;
 import java.io.Serializable;

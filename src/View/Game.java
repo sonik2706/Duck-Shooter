@@ -1,4 +1,4 @@
-package Program;
+package Controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,8 +6,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import Duck.*;
-import Weapon.*;
+import Model.*;
+import View.*;
 
 public class Game extends JPanel implements Runnable {
 
@@ -15,12 +15,13 @@ public class Game extends JPanel implements Runnable {
     Thread  gameThread,
             duckThread,
             obstacleThread;
-    Timer time;
+    View.Timer time;
     JLabel  timeLabel = new JLabel(),
             healthLabel = new JLabel(),
             scoreLabel = new JLabel(),
             weaponDamage = new JLabel();
 
+    private boolean stopped = false;
     private int level = 1;
     private Weapon weapon;
     private int FPS = 60;
@@ -39,12 +40,11 @@ public class Game extends JPanel implements Runnable {
         add(weaponDamage);
         startGame();
         this.setDoubleBuffered(true);
-
 //        setLayout(null);
     }
 
     public void startGame() {
-        time = new Timer();
+        time = new View.Timer();
         gameThread = new Thread(this);
         duckThread = new Thread(() -> {
             while (!duckThread.isInterrupted()) {
@@ -83,11 +83,12 @@ public class Game extends JPanel implements Runnable {
         obstacleThread.start();
 
         add(timeLabel);
-        add(healthLabel);
         add(scoreLabel);
+        add(healthLabel);
     }
 
     public void endGame() {
+        stopped = true;
         String nickname = JOptionPane.showInputDialog(null, "Nickname: ", null, JOptionPane.INFORMATION_MESSAGE);
         Score sc = new Score(nickname, points, time.getTime());
         ArrayList<Score> scores = new ArrayList<>();
@@ -181,7 +182,6 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-
     // Start: Author: RyiSnow  https://www.youtube.com/watch?v=VpH33Uw-_0E
     @Override
     public void run() {
@@ -190,7 +190,7 @@ public class Game extends JPanel implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while (!Thread.interrupted()) {
+        while (!stopped) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             lastTime = currentTime;
@@ -200,6 +200,7 @@ public class Game extends JPanel implements Runnable {
                 repaint();
                 delta--;
             }
+
         }
     }
     // END
@@ -220,7 +221,7 @@ public class Game extends JPanel implements Runnable {
         this.points = points;
     }
 
-    public ArrayList<Obstacle> getCloudList() {
+    public ArrayList<Obstacle> getObstacleList() {
         return obstacleList;
     }
 

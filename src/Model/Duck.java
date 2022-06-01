@@ -5,8 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.*;
-import Program.Game;
-import Program.Obstacle;
+import View.Game;
+import View.Obstacle;
 
 public abstract class Duck extends JLabel implements MouseListener {
 
@@ -55,12 +55,12 @@ public abstract class Duck extends JLabel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-//        ArrayList<Obstacle> obstacles = game.getCloudList();
-//        for (Obstacle obstacle : obstacles) {
-//            Point coordinates = e.getPoint();
-//            if (obstacle.getX() <= coordinates.x && coordinates.x <= obstacle.getX() + obstacle.getWidth() && obstacle.getY() <= coordinates.y && coordinates.y <= obstacle.getY() + obstacle.getHeight())
-//                return;
-//        }
+        ArrayList<Obstacle> obstacles = game.getObstacleList();
+        for (Obstacle obstacle : obstacles) {
+            Point coordinates = e.getPoint();
+            if (obstacle.getX() <= coordinates.x && coordinates.x <= obstacle.getX() + obstacle.getWidth() && obstacle.getY() <= coordinates.y && coordinates.y <= obstacle.getY() + obstacle.getHeight())
+                return;
+        }
 
         health -= game.getWeapon().getDamage();
 
